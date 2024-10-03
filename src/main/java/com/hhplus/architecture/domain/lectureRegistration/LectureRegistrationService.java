@@ -27,7 +27,7 @@ public class LectureRegistrationService {
 
         // 신청한 특강 아이디 리스트 조회
         List<Long> lectureIds = registrationRepository.findAllLectureIdsByStudentId(
-            command.studentId());
+            studentInfo.id());
 
         // 특강 조회
         List<Lecture> lectures = lectureRepository.findAllByIds(lectureIds);
