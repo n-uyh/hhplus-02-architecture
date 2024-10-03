@@ -16,7 +16,7 @@ public class LectureService {
         LectureCommand.Search searchCommand
     ) {
         List<Lecture> availableLectures = lectureRepository.findAllLecturesAvailable(
-            Lecture.MAX_STUDENT, searchCommand.from(), searchCommand.end()
+            Lecture.MAX_STUDENT, searchCommand.fromMinTime(), searchCommand.endMaxTime()
         );
 
         return availableLectures.stream().map(LectureInfo::fromDomain).toList();

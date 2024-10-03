@@ -25,7 +25,7 @@ class LectureServiceTest {
     private LectureRepository lectureRepository;
 
     @Test
-    @DisplayName("신청 가능한 특강의 목록을 조회해왔을 때, 특강의 남은 좌석 수는 0보다 크고 특강의 시작일시는 검색일시 이후이다.")
+    @DisplayName("신청 가능한 특강의 목록을 조회해왔을 때, 특강의 남은 좌석 수는 0보다 크고 특강의 시작일시는 검색날짜 사이이다.")
     void findAllAvailableLectures() {
         // given
         LocalDate from = LocalDate.of(2024, 9, 10);
@@ -40,7 +40,8 @@ class LectureServiceTest {
             new Lecture(1, "특강1", "강연자1", startAt, appliedCnt)
         );
 
-        when(lectureRepository.findAllLecturesAvailable(maxStudent, from, end))
+        when(lectureRepository.findAllLecturesAvailable(maxStudent, searchCommand.fromMinTime(),
+            searchCommand.endMaxTime()))
             .thenReturn(expectedLectures);
 
         List<LectureInfo> results = lectureService.findAllLecturesAvailable(
