@@ -1,8 +1,6 @@
 package com.hhplus.architecture.domain.lectureRegistration;
 
 import com.hhplus.architecture.domain.lecture.Lecture;
-import com.hhplus.architecture.domain.lecture.LectureException;
-import com.hhplus.architecture.domain.lecture.LectureException.ErrorCode;
 import com.hhplus.architecture.domain.lecture.LectureInfo;
 import com.hhplus.architecture.domain.lecture.LectureRepository;
 import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationException.RegistrationError;
@@ -53,9 +51,6 @@ public class LectureRegistrationService {
         StudentInfo studentInfo = studentRepository.findById(command.studentId());
         // 특강 조회
         Lecture lecture = lectureRepository.findOneById(command.lectureId());
-        if (lecture == null) {
-            throw new LectureException(ErrorCode.NOT_FOUND);
-        }
 
         // 신청 가능한 상태인지 체크
         lecture.checkStudentCanRegist(LocalDateTime.now());
