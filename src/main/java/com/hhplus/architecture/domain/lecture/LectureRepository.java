@@ -1,11 +1,11 @@
 package com.hhplus.architecture.domain.lecture;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 
 public interface LectureRepository {
 
-    List<Lecture> findAllLecturesAvailable(int maxCount, LocalDateTime searchedAt);
+    List<Lecture> findAllLecturesAvailable(int maxCount, LocalDate from, LocalDate end);
 
     List<Lecture> findAllByIds(List<Long> ids);
 

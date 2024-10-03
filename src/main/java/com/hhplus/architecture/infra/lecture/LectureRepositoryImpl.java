@@ -2,7 +2,7 @@ package com.hhplus.architecture.infra.lecture;
 
 import com.hhplus.architecture.domain.lecture.Lecture;
 import com.hhplus.architecture.domain.lecture.LectureRepository;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -15,14 +15,11 @@ public class LectureRepositoryImpl implements LectureRepository {
 
     /**
      * 신청가능한 특강 목록 조회
-     *
-     * @param maxCount   최대 수강인원
-     * @param searchedAt 조회일시
      */
     @Override
-    public List<Lecture> findAllLecturesAvailable(int maxCount, LocalDateTime searchedAt) {
+    public List<Lecture> findAllLecturesAvailable(int maxCount, LocalDate from, LocalDate end) {
         List<LectureEntity> availableLectureEntities = jpaRepository
-            .findAllByAppliedCntLessThanAndStartAtIsAfter(maxCount, searchedAt);
+            .findAllByAppliedCntLessThanAndStartAtBetween(maxCount, from, end);
         return availableLectureEntities.stream().map(Lecture::fromEntity).toList();
     }
 

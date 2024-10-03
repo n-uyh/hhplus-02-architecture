@@ -3,18 +3,16 @@ package com.hhplus.architecture.api.lecture;
 import com.hhplus.architecture.domain.lecture.LectureCommand;
 import com.hhplus.architecture.domain.lecture.LectureCommand.Search;
 import com.hhplus.architecture.domain.lecture.LectureInfo;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 public class LectureSearchDto {
 
-    public record Request(LocalDateTime searchedAt) {
+    public record Request(LocalDate from, LocalDate end) {
 
-        public Request() {
-            this(LocalDateTime.now());
-        }
 
         public LectureCommand.Search toCommand() {
-            return new Search(searchedAt);
+            return new Search(from, end);
         }
     }
 
