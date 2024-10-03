@@ -23,6 +23,6 @@ public class LectureRepositoryImpl implements LectureRepository {
     public List<Lecture> findAllLecturesAvailable(int maxCount, LocalDateTime searchedAt) {
         List<LectureEntity> availableLectureEntities = jpaRepository
             .findAllByAppliedCntLessThanAndStartAtIsAfter(maxCount, searchedAt);
-        return availableLectureEntities.stream().map(Lecture::fromEntity).toList();
+        return availableLectureEntities.stream().map(LectureEntity::toDomain).toList();
     }
 }
