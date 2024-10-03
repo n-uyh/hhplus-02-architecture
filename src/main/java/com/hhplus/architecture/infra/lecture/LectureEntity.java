@@ -1,7 +1,6 @@
 package com.hhplus.architecture.infra.lecture;
 
 
-import com.hhplus.architecture.domain.lecture.Lecture;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -31,10 +30,4 @@ public class LectureEntity {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    /**
-     * jpa entity -> domain
-     */
-    public Lecture toDomain() {
-        return new Lecture(id, title, lecturerName, startAt, appliedCnt);
-    }
 }

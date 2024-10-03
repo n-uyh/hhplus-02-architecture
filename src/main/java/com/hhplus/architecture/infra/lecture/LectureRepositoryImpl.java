@@ -29,6 +29,6 @@ public class LectureRepositoryImpl implements LectureRepository {
     @Override
     public List<Lecture> findAllByIds(List<Long> ids) {
         List<LectureEntity> entities = jpaRepository.findAllByIdIn(ids);
-        return entities.stream().map(LectureEntity::toDomain).toList();
+        return entities.stream().map(Lecture::fromEntity).toList();
     }
 }
