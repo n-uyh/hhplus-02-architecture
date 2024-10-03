@@ -29,7 +29,7 @@ public class LectureController {
      */
     @GetMapping("list")
     public ResponseEntity<List<LectureSearchDto.Response>> availableLectureList(
-        LectureSearchDto.Request request
+        @RequestBody LectureSearchDto.Request request
     ) {
         List<LectureInfo> lectureInfos = lectureService.findAllLecturesAvailable(
             request.toCommand());

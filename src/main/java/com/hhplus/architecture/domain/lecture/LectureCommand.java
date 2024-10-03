@@ -1,10 +1,10 @@
 package com.hhplus.architecture.domain.lecture;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class LectureCommand {
 
-    public record Search(LocalDateTime searchedAt) {
+    public record Search(LocalDate from, LocalDate end) {
 
     }
 
