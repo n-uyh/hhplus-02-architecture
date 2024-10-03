@@ -50,7 +50,7 @@ public class LectureRegistrationService {
         // 학생조회
         StudentInfo studentInfo = studentRepository.findById(command.studentId());
         // 특강 조회
-        Lecture lecture = lectureRepository.findOneById(command.lectureId());
+        Lecture lecture = lectureRepository.findOneByIdWithLock(command.lectureId());
 
         // 신청 가능한 상태인지 체크
         lecture.checkStudentCanRegist(LocalDateTime.now());

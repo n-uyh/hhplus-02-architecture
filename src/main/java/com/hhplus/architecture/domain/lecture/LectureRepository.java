@@ -9,7 +9,7 @@ public interface LectureRepository {
 
     List<Lecture> findAllByIds(List<Long> ids);
 
-    Lecture findOneById(long lectureId);
+    Lecture findOneByIdWithLock(long lectureId);
 
     int updateLectureAppliedCount(long id, int applied);
 }
