@@ -1,6 +1,7 @@
 package com.hhplus.architecture.domain.lecture;
 
 import com.hhplus.architecture.domain.lecture.LectureException.ErrorCode;
+import com.hhplus.architecture.infra.lecture.LectureEntity;
 import java.time.LocalDateTime;
 
 public record Lecture(
@@ -15,6 +16,14 @@ public record Lecture(
      * 최대수강인원
      */
     public static final int MAX_STUDENT = 30;
+
+    /**
+     * jpa entity -> domain
+     */
+    public static Lecture fromEntity(LectureEntity entity) {
+        return new Lecture(entity.getId(), entity.getTitle(), entity.getLecturerName(),
+            entity.getStartAt(), entity.getAppliedCnt());
+    }
 
     /**
      * 특강의 잔여 좌석 수 계산
