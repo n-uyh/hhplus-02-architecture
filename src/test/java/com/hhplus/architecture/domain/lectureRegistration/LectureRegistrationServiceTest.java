@@ -54,7 +54,7 @@ class LectureRegistrationServiceTest {
         );
 
         // 로직 실행
-        LectureRegistrationInfo result = lectureRegistrationService.findAllRegisteredLectures(
+        LecturesRegisteredByStudent result = lectureRegistrationService.findAllRegisteredLectures(
             searchCommand);
         // 검증
         // 1. 학생아이디 일치
