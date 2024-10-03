@@ -1,22 +1,16 @@
 package com.hhplus.architecture.domain.lecture;
 
 import com.hhplus.architecture.support.BaseErrorCode;
+import com.hhplus.architecture.support.BaseException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-public class LectureException extends RuntimeException {
-
-    private final ErrorCode errorCode;
+public class LectureException extends BaseException {
 
     public LectureException(ErrorCode errorCode) {
-        super(errorCode.message);
-        this.errorCode = errorCode;
+        super(errorCode);
     }
-
-    public ErrorCode getErrorCode() {
-        return errorCode;
-    }
-
+    
     @Getter
     @AllArgsConstructor
     public enum ErrorCode implements BaseErrorCode {
