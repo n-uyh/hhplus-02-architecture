@@ -1,10 +1,15 @@
 package com.hhplus.architecture;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import com.hhplus.architecture.domain.lecture.LectureException;
 import com.hhplus.architecture.domain.lecture.LectureException.ErrorCode;
 import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationCommand.Regist;
+import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationException;
+import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationException.RegistrationError;
+import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationRepository;
 import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationService;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -22,6 +27,9 @@ public class LectureIntegrationTest {
 
     @Autowired
     LectureRegistrationService lectureRegistrationService;
+
+    @Autowired
+    LectureRegistrationRepository registrationRepository;
 
 
     @Test
@@ -53,5 +61,30 @@ public class LectureIntegrationTest {
         executorService.shutdown();
 
         assertEquals(10, errorCount.intValue());
+    }
+
+    @Test
+    @DisplayName("동일한 사용자가 같은 특강을 5번 신청했을 때, 1번만 성공한다")
+    void OneStudentTriesToRegistSameLecture5TimesButJust1Success() {
+        long lectureId = 3L;
+        long studentId = 1L;
+
+        // 첫번째 케이스는 성공한다
+        assertDoesNotThrow(
+            () -> lectureRegistrationService.regist(new Regist(lectureId, studentId)));
+
+        // 나머지 네건은 실패한다.
+        for (int i = 0; i < 4; i++) {
+            LectureRegistrationException exception = assertThrows(
+                LectureRegistrationException.class,
+                () -> lectureRegistrationService.regist(new Regist(lectureId, studentId))
+            );
+            assertEquals(RegistrationError.ALREADY_REGISTERED, exception.getErrorCode());
+        }
+
+        int registrationCount = registrationRepository.countLectureRegistration(lectureId,
+            studentId);
+        assertEquals(1, registrationCount);
+
     }
 }
