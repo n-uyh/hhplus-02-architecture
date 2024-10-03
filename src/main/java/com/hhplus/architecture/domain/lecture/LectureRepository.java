@@ -6,4 +6,6 @@ import java.util.List;
 public interface LectureRepository {
 
     List<Lecture> findAllLecturesAvailable(int maxCount, LocalDateTime searchedAt);
+
+    List<Lecture> findAllByIds(List<Long> ids);
 }

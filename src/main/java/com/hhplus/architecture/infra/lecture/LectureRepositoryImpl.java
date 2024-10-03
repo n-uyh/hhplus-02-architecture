@@ -25,4 +25,10 @@ public class LectureRepositoryImpl implements LectureRepository {
             .findAllByAppliedCntLessThanAndStartAtIsAfter(maxCount, searchedAt);
         return availableLectureEntities.stream().map(LectureEntity::toDomain).toList();
     }
+
+    @Override
+    public List<Lecture> findAllByIds(List<Long> ids) {
+        List<LectureEntity> entities = jpaRepository.findAllByIdIn(ids);
+        return entities.stream().map(LectureEntity::toDomain).toList();
+    }
 }

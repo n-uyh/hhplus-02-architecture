@@ -1,7 +1,10 @@
 package com.hhplus.architecture.api.lecture;
 
+import com.hhplus.architecture.api.lecture.LectureRegisteredDto.Request;
 import com.hhplus.architecture.domain.lecture.LectureInfo;
 import com.hhplus.architecture.domain.lecture.LectureService;
+import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationInfo;
+import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LectureController {
 
     private final LectureService lectureService;
+    private final LectureRegistrationService lectureRegistrationService;
 
     /**
      * 신청 가능한 특강 목록 조회
@@ -30,7 +34,7 @@ public class LectureController {
 
         List<LectureSearchDto.Response> responses = lectureInfos.stream()
             .map(LectureSearchDto.Response::fromInfo).toList();
-        
+
         return ResponseEntity.ok(responses);
     }
 
@@ -38,10 +42,14 @@ public class LectureController {
      * 학생이 신청완료한 특강 목록 조회
      */
     @GetMapping("list/{studentId}")
-    public ResponseEntity<List<Object>> studentLecturesList(
+    public ResponseEntity<LectureRegisteredDto.Response> studentLecturesList(
         @PathVariable("studentId") long studentId
     ) {
-        return null;
+        Request request = new LectureRegisteredDto.Request(studentId);
+        LectureRegistrationInfo registionInfo = lectureRegistrationService.findAllRegisteredLectures(
+            request.toCommand());
+
+        return ResponseEntity.ok(LectureRegisteredDto.Response.fromInfo(registionInfo));
     }
 
     /**

@@ -1,5 +1,6 @@
 package com.hhplus.architecture.domain.lecture;
 
+import com.hhplus.architecture.api.lecture.CommonLectureResponse;
 import java.time.LocalDateTime;
 
 public record LectureInfo(
@@ -14,6 +15,10 @@ public record LectureInfo(
         return new LectureInfo(lecture.id(), lecture.title(), lecture.lecturerName(),
             lecture.startAt(),
             lecture.leftSeat());
+    }
+
+    public CommonLectureResponse toCommonResponse() {
+        return new CommonLectureResponse(id, title, lecturerName, startAt);
     }
 
 }

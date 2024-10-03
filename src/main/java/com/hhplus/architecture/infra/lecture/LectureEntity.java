@@ -37,5 +37,4 @@ public class LectureEntity {
     public Lecture toDomain() {
         return new Lecture(id, title, lecturerName, startAt, appliedCnt);
     }
-
 }
