@@ -21,6 +21,9 @@ public record Lecture(
      * jpa entity -> domain
      */
     public static Lecture fromEntity(LectureEntity entity) {
+        if (entity == null) {
+            throw new LectureException(ErrorCode.NOT_FOUND);
+        }
         return new Lecture(entity.getId(), entity.getTitle(), entity.getLecturerName(),
             entity.getStartAt(), entity.getAppliedCnt());
     }

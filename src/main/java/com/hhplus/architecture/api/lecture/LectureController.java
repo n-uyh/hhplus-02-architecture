@@ -3,14 +3,16 @@ package com.hhplus.architecture.api.lecture;
 import com.hhplus.architecture.api.lecture.LectureRegisteredDto.Request;
 import com.hhplus.architecture.domain.lecture.LectureInfo;
 import com.hhplus.architecture.domain.lecture.LectureService;
-import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationInfo;
 import com.hhplus.architecture.domain.lectureRegistration.LectureRegistrationService;
+import com.hhplus.architecture.domain.lectureRegistration.LecturesRegisteredByStudent;
+import com.hhplus.architecture.domain.lectureRegistration.RegistrationCompleted;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -46,7 +48,7 @@ public class LectureController {
         @PathVariable("studentId") long studentId
     ) {
         Request request = new LectureRegisteredDto.Request(studentId);
-        LectureRegistrationInfo registionInfo = lectureRegistrationService.findAllRegisteredLectures(
+        LecturesRegisteredByStudent registionInfo = lectureRegistrationService.findAllRegisteredLectures(
             request.toCommand());
 
         return ResponseEntity.ok(LectureRegisteredDto.Response.fromInfo(registionInfo));
@@ -56,9 +58,12 @@ public class LectureController {
      * 특강 신청
      */
     @PostMapping("regist")
-    public ResponseEntity<Object> regist(
+    public ResponseEntity<LectureRegistDto.Response> regist(
+        @RequestBody LectureRegistDto.Request request
     ) {
-        return null;
+        RegistrationCompleted completed = lectureRegistrationService.regist(request.toCommand());
+
+        return ResponseEntity.ok(LectureRegistDto.Response.fromInfo(completed));
     }
 
 }

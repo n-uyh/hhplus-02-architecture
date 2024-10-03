@@ -16,4 +16,18 @@ public class LectureRegistrationRepostiroyImpl implements LectureRegistrationRep
         return jpaRepository.findAllLectureIdsByStudentId(studentId);
     }
 
+    @Override
+    public void insertOne(long lectureId, long studentId) {
+        LectureRegistrationEntity entity = LectureRegistrationEntity.builder()
+            .lectureId(lectureId)
+            .studentId(studentId)
+            .build();
+
+        jpaRepository.save(entity);
+    }
+
+    @Override
+    public int countLectureRegistration(long lectureId, long studentId) {
+        return jpaRepository.countByLectureIdAndStudentId(lectureId, studentId);
+    }
 }

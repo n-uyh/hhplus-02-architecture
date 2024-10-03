@@ -11,4 +11,6 @@ public interface LectureRegistrationJpaRepository extends
     @Query("select r.lectureId from LectureRegistrationEntity r where r.studentId = :studentId")
     List<Long> findAllLectureIdsByStudentId(@Param("studentId") long studentId);
 
+    int countByLectureIdAndStudentId(long lectureId, long studentId);
+
 }
