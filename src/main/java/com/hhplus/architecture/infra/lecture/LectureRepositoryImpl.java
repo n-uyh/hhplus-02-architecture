@@ -31,4 +31,15 @@ public class LectureRepositoryImpl implements LectureRepository {
         List<LectureEntity> entities = jpaRepository.findAllByIdIn(ids);
         return entities.stream().map(LectureEntity::toDomain).toList();
     }
+
+    @Override
+    public Lecture findOneById(long lectureId) {
+        LectureEntity entity = jpaRepository.findOneById(lectureId);
+        return Lecture.fromEntity(entity);
+    }
+
+    @Override
+    public int updateLectureAppliedCount(long id, int applied) {
+        return jpaRepository.updateAppliedCount(id, applied);
+    }
 }
