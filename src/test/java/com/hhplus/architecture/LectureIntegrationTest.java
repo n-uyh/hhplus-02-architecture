@@ -36,7 +36,6 @@ public class LectureIntegrationTest {
         for (int i = 0; i < count; i++) {
             long studentId = i + 1;
 
-            System.out.println(i);
             executorService.submit(() -> {
                 try {
                     lectureRegistrationService.regist(new Regist(lectureId, studentId));
