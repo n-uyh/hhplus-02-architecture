@@ -31,8 +31,8 @@ public class LectureRepositoryImpl implements LectureRepository {
     }
 
     @Override
-    public Lecture findOneById(long lectureId) {
-        LectureEntity entity = jpaRepository.findOneById(lectureId);
+    public Lecture findOneByIdWithLock(long lectureId) {
+        LectureEntity entity = jpaRepository.findOneByIdWithLock(lectureId);
         return Lecture.fromEntity(entity);
     }
 

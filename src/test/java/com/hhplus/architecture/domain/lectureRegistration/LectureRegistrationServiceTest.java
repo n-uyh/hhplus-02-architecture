@@ -97,7 +97,7 @@ class LectureRegistrationServiceTest {
         // when
         when(registrationRepository.countLectureRegistration(lectureId, studentId)).thenReturn(0);
         when(studentRepository.findById(studentId)).thenReturn(new StudentInfo(studentId, "학생1"));
-        when(lectureRepository.findOneById(lectureId)).thenReturn(
+        when(lectureRepository.findOneByIdWithLock(lectureId)).thenReturn(
             new Lecture(lectureId, "특강1", "강연자1", LocalDateTime.of(2024, 11, 10, 14, 0),
                 Lecture.MAX_STUDENT));
 
@@ -120,7 +120,7 @@ class LectureRegistrationServiceTest {
         // when
         when(registrationRepository.countLectureRegistration(lectureId, studentId)).thenReturn(0);
         when(studentRepository.findById(studentId)).thenReturn(new StudentInfo(studentId, "학생1"));
-        when(lectureRepository.findOneById(lectureId)).thenReturn(
+        when(lectureRepository.findOneByIdWithLock(lectureId)).thenReturn(
             new Lecture(lectureId, "특강1", "강연자1", LocalDateTime.of(2024, 11, 10, 14, 0),
                 appliedCount));
 
